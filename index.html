@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Access to Exclusive Content</title>
-    <meta name="robots" content="noindex, nofollow">
+    <title>Live Video Experience</title>
     <style>
         * {
             margin: 0;
@@ -13,29 +12,22 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        body {
-            min-height: 100vh;
+        body, html {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
         }
         
-        /* Video Background */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .video-background video {
+        #background-video {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -43,324 +35,156 @@
             min-height: 100%;
             width: auto;
             height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -1;
         }
         
-        /* Dark overlay for better readability */
-        .video-overlay {
-            position: fixed;
+        .overlay {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 0;
         }
         
-        .box {
-            background: rgba(20, 20, 30, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 2;
+        .content {
             position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        
-        .box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 0, 79, 0.3) 0%, transparent 70%);
-            transform: rotate(45deg);
-            z-index: -1;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            padding: 2rem;
         }
         
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ff004f;
-            text-shadow: 0 0 15px rgba(255, 0, 79, 0.7);
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            font-weight: 700;
         }
         
         p {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             margin-bottom: 2.5rem;
-            line-height: 1.6;
-            color: #e0e0e0;
+            max-width: 800px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
         
-        .age-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: #ff004f;
-            text-shadow: 0 0 20px rgba(255, 0, 79, 0.9);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff004f, #ff2e6f);
-            color: #fff;
-            font-weight: bold;
-            padding: 16px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.3s ease;
+        .cta-button {
+            padding: 18px 42px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff3366, #ff0033);
+            color: white;
             border: none;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 0, 51, 0.4);
             letter-spacing: 1px;
-            box-shadow: 0 5px 20px rgba(255, 0, 79, 0.5);
-            position: relative;
-            overflow: hidden;
         }
         
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn:hover {
+        .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(255, 0, 79, 0.7);
+            box-shadow: 0 10px 25px rgba(255, 0, 51, 0.6);
+            background: linear-gradient(45deg, #ff0033, #ff3366);
         }
         
-        .btn.exit {
-            background: linear-gradient(45deg, #444, #666);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        .cta-button:active {
+            transform: translateY(1px);
         }
         
-        .btn.exit:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .warning {
-            font-size: 0.9rem;
-            margin-top: 30px;
-            color: #aaa;
-            font-style: italic;
-        }
-        
-        /* Loading state for video */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s;
-        }
-        
+        /* Loading animation */
         .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid #333;
-            border-top: 3px solid #ff004f;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            display: none;
         }
         
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
         
-        @media (max-width: 500px) {
-            .box {
-                padding: 30px 20px;
-                margin: 0 15px;
-            }
-            
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 2.5rem;
             }
             
             p {
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
             
-            .buttons {
-                flex-direction: column;
-                gap: 15px;
+            .cta-button {
+                padding: 15px 35px;
+                font-size: 1.2rem;
             }
-            
-            .btn {
-                width: 100%;
-                padding: 14px 25px;
-            }
-            
-            .age-icon {
-                font-size: 3rem;
-            }
-        }
-        
-        /* Fallback for mobile autoplay restrictions */
-        .video-fallback {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            z-index: -1;
         }
     </style>
 </head>
 <body>
-    <!-- Video Background -->
-    <div class="video-background">
-        <video autoplay muted loop playsinline id="bgVideo">
-            <source src="Background-video.mp4" type="video/mp4">
-            <!-- Fallback image if video doesn't load -->
-            <img src="data:image/svg+xml,%3Csvg xmlns='FB_IMG_1754585249363.jpg' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231a1a2e'/%3E%3Cstop offset='100%25' stop-color='%2316213e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23grad)'/%3E%3C/svg%3E" alt="Background" style="width: 100%; height: 100%; object-fit: cover;">
+    <div class="video-container">
+        <video id="background-video" autoplay muted loop playsinline>
+            <!-- Using a placeholder video from Pexels -->
+            <source src="Fullscreen.MP4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
-    </div>
-    
-    <!-- Fallback for mobile -->
-    <div class="video-fallback" id="videoFallback"></div>
-    
-    <!-- Dark overlay -->
-    <div class="video-overlay"></div>
-    
-    <!-- Loading screen -->
-    <div class="loading" id="loading">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Content Box -->
-    <div class="box">
-        <div class="age-icon">🔞</div>
-        <h1>Get Access to Exclusive Content</h1>
-        <p>Verify you're 18+ to get immediate access to premium adult content</p>
-        <div class="buttons">
-            <a href="#" onclick="handleVerificationClick(event, 'yes')" class="btn" id="yesBtn">Get Access Now</a>
-            <a href="#" onclick="handleVerificationClick(event, 'no')" class="btn exit" id="noBtn">Exit</a>
-        </div>
-        <p class="warning">Warning: 18+ age verification required for access</p>
-    </div>
-
-    <!-- Meta Pixel Code -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
+        <div class="overlay"></div>
         
-        fbq('init', '1091970342909970');
-        fbq('track', 'PageView');
-        fbq('track', 'ViewContent', {
-            content_name: 'Get Access - Age Verification',
-            content_category: 'Adult Content',
-            value: 0.00,
-            currency: 'USD'
-        });
+        <div class="content">
+            <h1>LIVE CONNECTION AWAITS</h1>
+            <p>Join our interactive live video experience and connect with people from around the world in real-time</p>
+            <button class="cta-button" id="join-button">JOIN ME ON LIVE VIDEO</button>
+        </div>
+    </div>
 
-        function handleVerificationClick(e, choice) {
-            e.preventDefault();
-            
-            const fbc = getCookie('_fbc');
-            const fbclid = new URLSearchParams(window.location.search).get('fbclid');
-            
-            let workerUrl = `https://juicypleasure-worker.mudilawal7.workers.dev?choice=${choice}`;
-            
-            if (fbc) workerUrl += `&fbc=${encodeURIComponent(fbc)}`;
-            if (fbclid) workerUrl += `&fbclid=${encodeURIComponent(fbclid)}`;
-            
-            const conversionValue = 0.003;
-            fbq('track', 'Lead', {
-                content_name: 'Get Access - ' + (choice === 'yes' ? 'Accepted' : 'Rejected'),
-                value: conversionValue,
-                currency: 'USD'
-            });
-            
-            fbq('trackCustom', 'AgeVerification', {
-                status: choice === 'yes' ? 'accepted' : 'rejected',
-                value: conversionValue,
-                currency: 'USD'
-            });
-            
-            window.location.href = workerUrl;
-        }
-
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-            return null;
-        }
-
-        // Video loading handling
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.getElementById('bgVideo');
-            const loading = document.getElementById('loading');
-            const fallback = document.getElementById('videoFallback');
+            const joinButton = document.getElementById('join-button');
+            const video = document.getElementById('background-video');
             
-            // Hide loading after video loads or after timeout
-            setTimeout(() => {
-                loading.style.opacity = '0';
-                setTimeout(() => loading.style.display = 'none', 500);
-            }, 2000);
+            // Try to play video with sound unmuted (will only work with user interaction)
+            function enableAudio() {
+                video.muted = false;
+            }
             
-            // Handle video errors
-            video.addEventListener('error', function() {
-                fallback.style.display = 'block';
+            // Button click event
+            joinButton.addEventListener('click', function() {
+                // Show loading state
+                const originalText = joinButton.textContent;
+                joinButton.innerHTML = 'CONNECTING <span class="loader"></span>';
+                joinButton.disabled = true;
+                
+                const loader = document.querySelector('.loader');
+                loader.style.display = 'inline-block';
+                
+                // Simulate connection process
+                setTimeout(function() {
+                    // In a real application, this would connect to the video service
+                    alert('Connecting you to the live video experience...');
+                    
+                    // Reset button
+                    joinButton.textContent = originalText;
+                    joinButton.disabled = false;
+                    loader.style.display = 'none';
+                    
+                    // Enable audio after user interaction
+                    enableAudio();
+                }, 1500);
             });
             
-            // Check if video is playing (mobile autoplay restrictions)
-            setTimeout(() => {
-                if (video.paused && video.readyState >= 3) {
-                    fallback.style.display = 'block';
-                }
-            }, 1000);
+            // Ensure video plays on load
+            video.play().catch(function(error) {
+                console.log('Video autoplay prevented: ', error);
+            });
         });
     </script>
-    <noscript>
-        <img height="1" width="1" style="display:none" 
-            src="https://www.facebook.com/tr?id=1091970342909970&ev=PageView&noscript=1"/>
-    </noscript>
 </body>
-            </html>
+    </html>
