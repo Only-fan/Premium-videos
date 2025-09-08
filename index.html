@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Video Experience</title>
+    <title>Live Video Connection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -45,7 +46,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, rgba(126, 0, 255, 0.7), rgba(255, 0, 102, 0.7));
             z-index: 0;
         }
         
@@ -55,75 +56,142 @@
             text-align: center;
             color: white;
             padding: 2rem;
+            max-width: 800px;
         }
         
         h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .counter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .counter-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+        }
+        
+        .counter-number {
+            font-size: 2.5rem;
             font-weight: 700;
         }
         
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 2.5rem;
-            max-width: 800px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        .counter-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
         
         .cta-button {
-            padding: 18px 42px;
+            padding: 22px 60px;
             font-size: 1.4rem;
-            font-weight: 600;
-            background: linear-gradient(45deg, #ff3366, #ff0033);
+            font-weight: 700;
+            background: linear-gradient(45deg, #FF00AA, #FF5500);
             color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 60px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(255, 0, 51, 0.4);
-            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(255, 0, 170, 0.5);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
         }
         
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 0, 51, 0.6);
-            background: linear-gradient(45deg, #ff0033, #ff3366);
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 0, 170, 0.7);
+            letter-spacing: 2.5px;
         }
         
         .cta-button:active {
-            transform: translateY(1px);
+            transform: scale(0.98);
         }
         
-        /* Loading animation */
-        .loader {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-left: 10px;
-            display: none;
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.2),
+                rgba(255, 255, 255, 0)
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes shine {
+            0% {
+                left: -50%;
+            }
+            100% {
+                left: 150%;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(255, 0, 170, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 15px 40px rgba(255, 0, 170, 0.7);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(255, 0, 170, 0.5);
+            }
+        }
+        
+        .notice {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
         
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                letter-spacing: 2px;
             }
             
-            p {
-                font-size: 1.2rem;
+            .counter {
+                flex-wrap: wrap;
+            }
+            
+            .counter-item {
+                min-width: 70px;
+            }
+            
+            .counter-number {
+                font-size: 2rem;
             }
             
             .cta-button {
-                padding: 15px 35px;
+                padding: 18px 45px;
                 font-size: 1.2rem;
             }
         }
@@ -132,16 +200,36 @@
 <body>
     <div class="video-container">
         <video id="background-video" autoplay muted loop playsinline>
-            <!-- Using a placeholder video from Pexels -->
             <source src="Fullscreen.MP4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="overlay"></div>
         
         <div class="content">
-            <h1>LIVE CONNECTION AWAITS</h1>
-            <p>Join our interactive live video experience and connect with people from around the world in real-time</p>
-            <button class="cta-button" id="join-button">JOIN ME ON LIVE VIDEO</button>
+            <h1>Live Connection Waiting</h1>
+            
+            <div class="counter">
+                <div class="counter-item">
+                    <div class="counter-number">124</div>
+                    <div class="counter-label">Online Now</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number">98%</div>
+                    <div class="counter-label">Connected</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number">27</div>
+                    <div class="counter-label">Available</div>
+                </div>
+            </div>
+            
+            <button class="cta-button pulse" id="join-button">
+                JOIN ME ON LIVE VIDEO
+            </button>
+            
+            <div class="notice">
+                <i class="fas fa-lock"></i> Secure connection | <i class="fas fa-user-shield"></i> Private
+            </div>
         </div>
     </div>
 
@@ -150,35 +238,43 @@
             const joinButton = document.getElementById('join-button');
             const video = document.getElementById('background-video');
             
-            // Try to play video with sound unmuted (will only work with user interaction)
-            function enableAudio() {
-                video.muted = false;
+            // Update counters randomly to make them look dynamic
+            function updateCounters() {
+                const onlineNow = document.querySelector('.counter-item:nth-child(1) .counter-number');
+                const available = document.querySelector('.counter-item:nth-child(3) .counter-number');
+                
+                onlineNow.textContent = Math.floor(120 + Math.random() * 15);
+                available.textContent = Math.floor(25 + Math.random() * 10);
+                
+                setTimeout(updateCounters, 5000);
             }
             
             // Button click event
             joinButton.addEventListener('click', function() {
-                // Show loading state
-                const originalText = joinButton.textContent;
-                joinButton.innerHTML = 'CONNECTING <span class="loader"></span>';
-                joinButton.disabled = true;
+                // Remove pulse animation
+                joinButton.classList.remove('pulse');
                 
-                const loader = document.querySelector('.loader');
-                loader.style.display = 'inline-block';
+                // Change button text and style
+                joinButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CONNECTING...';
+                joinButton.style.background = 'linear-gradient(45deg, #3366ff, #0033cc)';
                 
                 // Simulate connection process
                 setTimeout(function() {
-                    // In a real application, this would connect to the video service
-                    alert('Connecting you to the live video experience...');
+                    // Redirect or trigger popunder (this would be replaced with actual popunder code)
+                    console.log('Redirecting to video connection...');
                     
-                    // Reset button
-                    joinButton.textContent = originalText;
-                    joinButton.disabled = false;
-                    loader.style.display = 'none';
+                    // In a real scenario, this would be the popunder code
+                    // window.open('https://example.com', '_blank', 'width=1,height=1');
                     
-                    // Enable audio after user interaction
-                    enableAudio();
-                }, 1500);
+                    // For demonstration, we'll just show a message
+                    joinButton.innerHTML = 'REDIRECTING <i class="fas fa-arrow-right"></i>';
+                    joinButton.style.background = 'linear-gradient(45deg, #00cc66, #00994d)';
+                    
+                }, 2000);
             });
+            
+            // Start updating counters
+            updateCounters();
             
             // Ensure video plays on load
             video.play().catch(function(error) {
@@ -187,4 +283,4 @@
         });
     </script>
 </body>
-    </html>
+                    </html>
