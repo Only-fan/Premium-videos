@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <!-- TikTok Pixel Code Start -->
-<script>
-!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
 
-  ttq.load('D34L17JC77U2RJTP8AUG');
-  ttq.page();
-}(window, document, 'ttq');
-</script>
-<!-- TikTok Pixel Code End -->
+      ttq.load('D34L17JC77U2RJTP8AUG');
+      ttq.page();
+    }(window, document, 'ttq');
+    </script>
+    <!-- TikTok Pixel Code End -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Video Connection</title>
@@ -184,6 +184,27 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
             opacity: 0.8;
         }
         
+        /* Loading indicator */
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             h1 {
@@ -240,6 +261,11 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
                 JOIN ME ON LIVE VIDEO
             </button>
             
+            <div class="loading" id="loading-indicator">
+                <div class="loading-spinner"></div>
+                <p>Redirecting you to the live video...</p>
+            </div>
+            
             <div class="notice">
                 <i class="fas fa-lock"></i> Secure connection | <i class="fas fa-user-shield"></i> Private
             </div>
@@ -250,6 +276,8 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
         document.addEventListener('DOMContentLoaded', function() {
             const joinButton = document.getElementById('join-button');
             const video = document.getElementById('background-video');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            let buttonClicked = false;
             
             // Update counters randomly to make them look dynamic
             function updateCounters() {
@@ -264,13 +292,70 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
             
             // Button click event
             joinButton.addEventListener('click', function() {
+                if (buttonClicked) return; // Prevent multiple clicks
+                buttonClicked = true;
+                
                 // Remove pulse animation
                 joinButton.classList.remove('pulse');
                 
+                // Show loading indicator
+                loadingIndicator.style.display = 'block';
                 
-                // Immediate redirect
-                window.location.href = 'https://mata-arewa.github.io/Areoo312fbf/';
+                // Track the button click event with TikTok
+                try {
+                    ttq.track('ClickButton', {
+                        contents: [{
+                            content_type: 'button_click',
+                            content_name: 'Join Live Video Button'
+                        }],
+                        value: 1,
+                        currency: 'USD'
+                    });
+                    
+                    // Also track as a custom event
+                    ttq.track('Custom', {
+                        event: 'live_video_join_click',
+                        button_id: 'join-button'
+                    });
+                    
+                    console.log('TikTok event tracked: Button click');
+                } catch (e) {
+                    console.error('Error tracking TikTok event:', e);
+                }
+                
+                // Send event to server for CAPI (Conversion API)
+                sendServerEvent();
+                
+                // Wait a moment to ensure events are sent before redirecting
+                setTimeout(function() {
+                    window.location.href = 'https://mata-arewa.github.io/Areoo312fbf/';
+                }, 500);
             });
+            
+            // Function to send event to server for TikTok CAPI
+            function sendServerEvent() {
+                // This would typically be an API call to your server
+                // The server would then forward the event to TikTok's Conversion API
+                console.log('Server event would be sent here for CAPI integration');
+                
+                // Example using fetch (you would need to implement the server endpoint)
+                /*
+                fetch('/api/track-event', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        event: 'button_click',
+                        button_id: 'join-button',
+                        timestamp: new Date().toISOString(),
+                        user_agent: navigator.userAgent,
+                        // Include other relevant data
+                    })
+                })
+                .catch(error => console.error('Error sending server event:', error));
+                */
+            }
             
             // Start updating counters
             updateCounters();
