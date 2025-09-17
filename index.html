@@ -8,7 +8,6 @@
     var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
     ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
-
       ttq.load('D34L17JC77U2RJTP8AUG');
       ttq.page();
     }(window, document, 'ttq');
@@ -234,7 +233,7 @@
 <body>
     <div class="video-container">
         <video id="background-video" autoplay muted loop playsinline>
-            <source src="Fullscreen.MP4" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-group-of-friends-partying-happily-4640-large.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="overlay"></div>
@@ -291,18 +290,15 @@
             }
             
             // Button click event
-            joinButton.addEventListener('click', function() {
-                if (buttonClicked) return; // Prevent multiple clicks
+            joinButton.addEventListener('click', async function() {
+                if (buttonClicked) return;
                 buttonClicked = true;
                 
-                // Remove pulse animation
                 joinButton.classList.remove('pulse');
-                
-                // Show loading indicator
                 loadingIndicator.style.display = 'block';
                 
-                // Track the button click event with TikTok
                 try {
+                    // Track with TikTok pixel (browser-side)
                     ttq.track('ClickButton', {
                         contents: [{
                             content_type: 'button_click',
@@ -312,50 +308,27 @@
                         currency: 'USD'
                     });
                     
-                    // Also track as a custom event
-                    ttq.track('Custom', {
-                        event: 'live_video_join_click',
-                        button_id: 'join-button'
+                    // Send event to Worker (server-side)
+                    const response = await fetch('https://tiktok-capi-proxy.mudilawal7.workers.dev', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            event: "button_click",
+                            button_id: "join-button"
+                        })
                     });
                     
-                    console.log('TikTok event tracked: Button click');
-                } catch (e) {
-                    console.error('Error tracking TikTok event:', e);
-                }
-                
-                // Send event to server for CAPI (Conversion API)
-                sendServerEvent();
-                
-                // Wait a moment to ensure events are sent before redirecting
-                setTimeout(function() {
+                    // Redirect after sending the event
                     window.location.href = 'https://tiktok-capi-proxy.mudilawal7.workers.dev';
-                }, 500);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    // Fallback redirect if anything fails
+                    window.location.href = 'https://tiktok-capi-proxy.mudilawal7.workers.dev';
+                }
             });
-            
-            // Function to send event to server for TikTok CAPI
-            function sendServerEvent() {
-                // This would typically be an API call to your server
-                // The server would then forward the event to TikTok's Conversion API
-                console.log('Server event would be sent here for CAPI integration');
-                
-                // Example using fetch (you would need to implement the server endpoint)
-                /*
-                fetch('/api/track-event', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        event: 'button_click',
-                        button_id: 'join-button',
-                        timestamp: new Date().toISOString(),
-                        user_agent: navigator.userAgent,
-                        // Include other relevant data
-                    })
-                })
-                .catch(error => console.error('Error sending server event:', error));
-                */
-            }
             
             // Start updating counters
             updateCounters();
@@ -367,4 +340,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
