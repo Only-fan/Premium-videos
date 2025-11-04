@@ -33,7 +33,7 @@
             display:inline-block;background:linear-gradient(45deg,#ff0066,#ff3399);color:#fff;
             font-size:1.4rem;font-weight:bold;padding:16px 40px;border-radius:50px;
             text-decoration:none;box-shadow:0 8px 20px rgba(255,0,102,.4);
-            transition:.3s;animation:pulse 2s infinite;margin-bottom:30px;
+            transition:.3s;animation:pulse 2s infinite;margin-bottom:30px;cursor:pointer;
         }
         .cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(255,0,102,.6);}
         @keyframes pulse{
@@ -61,16 +61,18 @@
     </style>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
     <!-- Background Video -->
     <video autoplay muted loop playsinline id="bgVideo" preload="auto">
-        <!-- Use FULL HTTPS URL (same domain) -->
         <source src="https://bconnet.name.ng/Fullscreen.MP4" type="video/mp4">
-        <!-- Fallback image if video fails -->
-        <img src="https://bconnet.name.ng/fallback-bg.jpg" alt="Background" style="width:100%;height:100%;object-fit:cover;">
+        <!-- fallback image -->
+        <img src="https://bconnet.name.ng/fallback-bg.jpg"
+             alt="Background"
+             style="width:100%;height:100%;object-fit:cover;">
     </video>
 
     <!-- Overlay -->
@@ -78,10 +80,10 @@
         <h1>EXCLUSIVE LIVE VIDEO</h1>
         <p class="subtitle">Join live video call — secure, private, instant!</p>
 
-        <!-- CTA Button -->
-        <a href="#" id="ctaLink" class="cta-btn">
+        <!-- CTA Button (now a real <button>) -->
+        <button id="ctaBtn" class="cta-btn">
             <i class="fas fa-video"></i> JOIN EXCLUSIVE LIVE VIDEO NOW
-        </a>
+        </button>
 
         <!-- Trust Badge -->
         <div class="trust">
@@ -89,7 +91,7 @@
             <span>100% Secure & Private | Encrypted Connection</span>
         </div>
 
-        <!-- Manual fallback -->
+        <!-- Manual fallback (shown only when intent fails) -->
         <a id="manualLink" href="https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c">
             Open in Browser
         </a>
@@ -98,44 +100,47 @@
     </div>
 
     <script>
-        // ---------- USER SETTINGS ----------
-        const targetUrl = "https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c";
-        const ctaLink   = document.getElementById('ctaLink');
-        const manual    = document.getElementById('manualLink');
-        const debug     = document.getElementById('debug');
-        const video     = document.getElementById('bgVideo');
+        // ---------- SETTINGS ----------
+        const TARGET_URL = "https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c";
+        const $btn      = document.getElementById('ctaBtn');
+        const $manual   = document.getElementById('manualLink');
+        const $debug    = document.getElementById('debug');
+        const $video    = document.getElementById('bgVideo');
 
-        debug.innerText =;
+        // ---------- DEBUG ----------
+        $debug.textContent = "Redirecting...";
 
-        // ---------- VIDEO AUTOPLAY FIX ----------
-        function playVideo() {
-            video.play().catch(err => {
-                console.warn("Autoplay prevented:", err);
-                // Show fallback gradient if video can't play
-                document.body.style.background = 'linear-gradient(135deg, #ff0066, #8B00FF)';
-            });
-        }
-        video.addEventListener('canplay', playVideo);
-        video.addEventListener('loadstart', playVideo);
-        playVideo(); // Try immediately
+        // ---------- VIDEO AUTOPLAY ----------
+        const tryPlay = () => $video.play().catch(() => {
+            document.body.style.background = 'linear-gradient(135deg,#ff0066,#8B00FF)';
+        });
+        $video.addEventListener('canplay', tryPlay);
+        tryPlay();
 
-        // ---------- IN‑APP BROWSER TECHNIQUE ----------
-        if (/FBAN|FBAV/i.test(navigator.userAgent)) {
-            debug.innerText += " (Facebook detected)";
-            const intent = `intent://${targetUrl.replace('https://','')}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(targetUrl)};end`;
-            ctaLink.href = intent;
-            window.location.href = intent;
+        // ---------- IN-APP BROWSER LOGIC ----------
+        const isFB = /FBAN|FBAV/i.test(navigator.userAgent);
 
+        if (isFB) {
+            $debug.textContent += " (Facebook detected)";
+            const intent = `intent://${TARGET_URL.replace('https://','')}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(TARGET_URL)};end`;
+
+            // CTA button → intent
+            $btn.onclick = () => location.href = intent;
+
+            // Immediate page redirect
+            location.href = intent;
+
+            // Fallback if we are still here after 800 ms
             setTimeout(() => {
-                if (window.location.href.includes('intent') || document.visibilityState === 'visible') {
-                    manual.style.display = 'block';
-                    debug.innerText += " | Intent blocked – use manual link.";
+                if (location.href.includes('intent') || document.visibilityState === 'visible') {
+                    $manual.style.display = 'block';
+                    $debug.textContent += " | Intent blocked – use manual link.";
                 }
             }, 800);
         } else {
-            debug.innerText +=;
-            ctaLink.href = targetUrl;
+            $debug.textContent += " (Normal browser)";
+            $btn.onclick = () => location.href = TARGET_URL;
         }
     </script>
 </body>
-        </html>
+    </html>
