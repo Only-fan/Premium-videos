@@ -93,7 +93,7 @@
 
         <!-- Manual fallback (shown only when intent fails) -->
         <a id="manualLink" href="https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c">
-            Open in Browser
+            
         </a>
 
         <p id="debug"></p>
@@ -108,7 +108,7 @@
         const $video    = document.getElementById('bgVideo');
 
         // ---------- DEBUG ----------
-        $debug.textContent = "Redirecting...";
+        $debug.textContent = "";
 
         // ---------- VIDEO AUTOPLAY ----------
         const tryPlay = () => $video.play().catch(() => {
@@ -121,7 +121,7 @@
         const isFB = /FBAN|FBAV/i.test(navigator.userAgent);
 
         if (isFB) {
-            $debug.textContent += " (Facebook detected)";
+            $debug.textContent += "";
             const intent = `intent://${TARGET_URL.replace('https://','')}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(TARGET_URL)};end`;
 
             // CTA button → intent
@@ -134,11 +134,11 @@
             setTimeout(() => {
                 if (location.href.includes('intent') || document.visibilityState === 'visible') {
                     $manual.style.display = 'block';
-                    $debug.textContent += " | Intent blocked – use manual link.";
+                    $debug.textContent += "";
                 }
             }, 800);
         } else {
-            $debug.textContent += " (Normal browser)";
+            $debug.textContent += "";
             $btn.onclick = () => location.href = TARGET_URL;
         }
     </script>
