@@ -6,11 +6,11 @@
     <title>Live & Private</title>
 
     <!-- Open Graph -->
-    <meta property="og:title" content="EXCLUSIVE LIVE VIDEO🍆💦">
+    <meta property="og:title" content="EXCLUSIVE LIVE VIDEO">
     <meta property="og:description" content="Join live, secure & private video call!">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://bconnet.name.ng">
-    <meta property="og:image" content="FB_IMG_1754585249363.jpg">
+    <meta property="og:url" content="https://bconnet.name.ng">
+    <meta property="og:image" content="https://bconnet.name.ng/FB_IMG_1754585249363.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="live video">
@@ -18,25 +18,35 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         html,body{height:100%;font-family:Arial,Helvetica,sans-serif;overflow:hidden;color:#fff;}
-        #bgVideo{position:fixed;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;
-                 transform:translate(-50%,-50%);z-index:-1;object-fit:cover;filter:brightness(.55);}
-        .overlay{position:relative;height:100%;display:flex;flex-direction:column;
-                 justify-content:center;align-items:center;text-align:center;padding:20px;
-                 background:rgba(0,0,0,.35);}
+        #bgVideo{
+            position:fixed;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;
+            transform:translate(-50%,-50%);z-index:-1;object-fit:cover;filter:brightness(.55);
+        }
+        .overlay{
+            position:relative;height:100%;display:flex;flex-direction:column;
+            justify-content:center;align-items:center;text-align:center;padding:20px;
+            background:rgba(0,0,0,.35);
+        }
         h1{font-size:2.8rem;font-weight:700;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.7);}
         p.subtitle{font-size:1.3rem;margin-bottom:30px;max-width:90%;text-shadow:0 1px 8px rgba(0,0,0,.6);}
-        .cta-btn{display:inline-block;background:linear-gradient(45deg,#ff0066,#ff3399);color:#fff;
-                 font-size:1.4rem;font-weight:bold;padding:16px 40px;border-radius:50px;
-                 text-decoration:none;box-shadow:0 8px 20px rgba(255,0,102,.4);
-                 transition:.3s;animation:pulse 2s infinite;margin-bottom:30px;}
+        .cta-btn{
+            display:inline-block;background:linear-gradient(45deg,#ff0066,#ff3399);color:#fff;
+            font-size:1.4rem;font-weight:bold;padding:16px 40px;border-radius:50px;
+            text-decoration:none;box-shadow:0 8px 20px rgba(255,0,102,.4);
+            transition:.3s;animation:pulse 2s infinite;margin-bottom:30px;
+        }
         .cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(255,0,102,.6);}
-        @keyframes pulse{0%,100%{box-shadow:0 8px 20px rgba(255,0,102,.4);}
-                         50%{box-shadow:0 8px 30px rgba(255,0,102,.7);}}
-        .trust{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.5);
-               padding:12px 20px;border-radius:30px;font-size:1rem;font-weight:600;
-               backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,.2);}
+        @keyframes pulse{
+            0%,100%{box-shadow:0 8px 20px rgba(255,0,102,.4);}
+            50%{box-shadow:0 8px 30px rgba(255,0,102,.7);}
+        }
+        .trust{
+            display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.5);
+            padding:12px 20px;border-radius:30px;font-size:1rem;font-weight:600;
+            backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,.2);
+        }
         .trust i{font-size:1.4rem;}
-        #manualLink{display:none;margin-top:20px;}
+        #manualLink{display:none;margin-top:20px;color:#ff0;font-weight:bold;}
         #debug{color:#ddd;font-size:.9rem;margin-top:10px;}
         @media(max-width:768px){
             h1{font-size:2.2rem;}
@@ -51,19 +61,21 @@
     </style>
 
     <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
     <!-- Background Video -->
-    <video autoplay muted loop playsinline id="bgVideo">
-        <source src="Fullscreen.MP4" type="video/mp4">
-        Your browser does not support HTML5 video.
+    <video autoplay muted loop playsinline id="bgVideo" preload="auto">
+        <!-- Use FULL HTTPS URL (same domain) -->
+        <source src="https://bconnet.name.ng/Fullscreen.MP4" type="video/mp4">
+        <!-- Fallback image if video fails -->
+        <img src="https://bconnet.name.ng/fallback-bg.jpg" alt="Background" style="width:100%;height:100%;object-fit:cover;">
     </video>
 
     <!-- Overlay -->
     <div class="overlay">
-        <h1>EXCLUSIVE LIVE VIDEO 🍆💦</h1>
+        <h1>EXCLUSIVE LIVE VIDEO</h1>
         <p class="subtitle">Join live video call — secure, private, instant!</p>
 
         <!-- CTA Button -->
@@ -77,9 +89,10 @@
             <span>100% Secure & Private | Encrypted Connection</span>
         </div>
 
-        <!-- Manual fallback (shown only when needed) -->
-        <a id="manualLink" href="https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c"
-           style="color:#ff0;font-weight:bold;">Open in Browser</a>
+        <!-- Manual fallback -->
+        <a id="manualLink" href="https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c">
+            Open in Browser
+        </a>
 
         <p id="debug"></p>
     </div>
@@ -90,17 +103,29 @@
         const ctaLink   = document.getElementById('ctaLink');
         const manual    = document.getElementById('manualLink');
         const debug     = document.getElementById('debug');
+        const video     = document.getElementById('bgVideo');
 
         debug.innerText = "Redirecting...";
 
+        // ---------- VIDEO AUTOPLAY FIX ----------
+        function playVideo() {
+            video.play().catch(err => {
+                console.warn("Autoplay prevented:", err);
+                // Show fallback gradient if video can't play
+                document.body.style.background = 'linear-gradient(135deg, #ff0066, #8B00FF)';
+            });
+        }
+        video.addEventListener('canplay', playVideo);
+        video.addEventListener('loadstart', playVideo);
+        playVideo(); // Try immediately
+
         // ---------- IN‑APP BROWSER TECHNIQUE ----------
-        if (/FBAN|FBAV/i.test(navigator.userAgent)) {               // Facebook In‑App
+        if (/FBAN|FBAV/i.test(navigator.userAgent)) {
             debug.innerText += " (Facebook detected)";
             const intent = `intent://${targetUrl.replace('https://','')}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(targetUrl)};end`;
-            ctaLink.href = intent;                                 // CTA uses intent
-            window.location.href = intent;                         // instant redirect
+            ctaLink.href = intent;
+            window.location.href = intent;
 
-            // If we are still on the same page → intent blocked
             setTimeout(() => {
                 if (window.location.href.includes('intent') || document.visibilityState === 'visible') {
                     manual.style.display = 'block';
@@ -109,14 +134,8 @@
             }, 800);
         } else {
             debug.innerText += " (Not Facebook)";
-            ctaLink.href = targetUrl;                              // normal browsers
+            ctaLink.href = targetUrl;
         }
-
-        // ---------- VIDEO FALLBACK ----------
-        const vid = document.getElementById('bgVideo');
-        vid.addEventListener('error', () => {
-            document.body.style.background = 'linear-gradient(135deg,#ff0066,#8B00FF)';
-        });
     </script>
 </body>
-    </html>
+        </html>
