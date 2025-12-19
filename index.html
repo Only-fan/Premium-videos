@@ -1,172 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '751231147934235');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=751231147934235&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11345273649"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-11345273649');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live & Private</title>
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="EXCLUSIVE LIVE VIDEO">
-    <meta property="og:description" content="Join live, secure & private video call!">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bconnet.name.ng">
-    <meta property="og:image" content="https://bconnet.name.ng/FB_IMG_1754585249363.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="live video">
-
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        html,body{height:100%;font-family:Arial,Helvetica,sans-serif;overflow:hidden;color:#fff;}
-        #bgVideo{
-            position:fixed;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;
-            transform:translate(-50%,-50%);z-index:-1;object-fit:cover;filter:brightness(.55);
-        }
-        .overlay{
-            position:relative;height:100%;display:flex;flex-direction:column;
-            justify-content:center;align-items:center;text-align:center;padding:20px;
-            background:rgba(0,0,0,.35);
-        }
-        h1{font-size:2.8rem;font-weight:700;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.7);}
-        p.subtitle{font-size:1.3rem;margin-bottom:30px;max-width:90%;text-shadow:0 1px 8px rgba(0,0,0,.6);}
-        .cta-btn{
-            display:inline-block;background:linear-gradient(45deg,#ff0066,#ff3399);color:#fff;
-            font-size:1.4rem;font-weight:bold;padding:16px 40px;border-radius:50px;
-            text-decoration:none;box-shadow:0 8px 20px rgba(255,0,102,.4);
-            transition:.3s;animation:pulse 2s infinite;margin-bottom:30px;cursor:pointer;
-        }
-        .cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(255,0,102,.6);}
-        @keyframes pulse{
-            0%,100%{box-shadow:0 8px 20px rgba(255,0,102,.4);}
-            50%{box-shadow:0 8px 30px rgba(255,0,102,.7);}
-        }
-        .trust{
-            display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.5);
-            padding:12px 20px;border-radius:30px;font-size:1rem;font-weight:600;
-            backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,.2);
-        }
-        .trust i{font-size:1.4rem;}
-        #manualLink{display:none;margin-top:20px;color:#ff0;font-weight:bold;}
-        #debug{color:#ddd;font-size:.9rem;margin-top:10px;}
-        @media(max-width:768px){
-            h1{font-size:2.2rem;}
-            p.subtitle{font-size:1.1rem;}
-            .cta-btn{font-size:1.2rem;padding:14px 32px;}
-        }
-        @media(max-width:480px){
-            h1{font-size:1.8rem;}
-            .cta-btn{font-size:1.1rem;padding:12px 28px;}
-            .trust{font-size:.9rem;padding:10px 16px;}
-        }
-    </style>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Connect with me on</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Background Picture -->
+    <div id="image-bg"></div>
 
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline id="bgVideo" preload="auto">
-        <source src="https://bconnet.name.ng/Fullscreen.MP4" type="video/mp4">
-        <!-- fallback image -->
-        <img src="https://bconnet.name.ng/fallback-bg.jpg"
-             alt="Background"
-             style="width:100%;height:100%;object-fit:cover;">
-    </video>
-
-    <!-- Overlay -->
-    <div class="overlay">
-        <h1>EXCLUSIVE LIVE VIDEO</h1>
-        <p class="subtitle">Join live video call — secure, private, instant!</p>
-
-        <!-- CTA Button (now a real <button>) -->
-        <button id="ctaBtn" class="cta-btn">
-            <i class="fas fa-video"></i> JOIN EXCLUSIVE LIVE VIDEO NOW
-        </button>
-
-        <!-- Trust Badge -->
-        <div class="trust">
-            <i class="fas fa-lock"></i>
-            <span>100% Secure & Private | Encrypted Connection</span>
-        </div>
-
-        <!-- Manual fallback (shown only when intent fails) -->
-        <a id="manualLink" href="https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c">
-            
-        </a>
-
-        <p id="debug"></p>
+    <!-- Content Overlay -->
+    <div class="landing-page">
+        <header>
+            <h1>CONNECT WITH ME ON:</h1>
+        </header>
+        <main>
+            <div class="buttons-container">
+                <a href="https://only-fan.github.io/Linda-galary/" class="social-button whatsapp">
+                    WhatsApp
+                </a>
+                <a href="https://only-fan.github.io/Linda-galary/" class="social-button telegram">
+                    Telegram
+                </a>
+                <a href="https://only-fan.github.io/Linda-galary/" class="social-button live-video">
+                    Live Video
+                </a>
+            </div>
+        </main>
+        <footer>
+            <p>© 2025 Bconnet. All rights reserved.</p>
+        </footer>
     </div>
-
-    <script>
-        // ---------- SETTINGS ----------
-        const TARGET_URL = "https://stopperscared.com/jmc60semv?key=d8e44b007f5a4fc5f2e96321aa7bf42c";
-        const $btn      = document.getElementById('ctaBtn');
-        const $manual   = document.getElementById('manualLink');
-        const $debug    = document.getElementById('debug');
-        const $video    = document.getElementById('bgVideo');
-
-        // ---------- DEBUG ----------
-        $debug.textContent = "";
-
-        // ---------- VIDEO AUTOPLAY ----------
-        const tryPlay = () => $video.play().catch(() => {
-            document.body.style.background = 'linear-gradient(135deg,#ff0066,#8B00FF)';
-        });
-        $video.addEventListener('canplay', tryPlay);
-        tryPlay();
-
-        // ---------- IN-APP BROWSER LOGIC ----------
-        const isFB = /FBAN|FBAV/i.test(navigator.userAgent);
-
-        if (isFB) {
-            $debug.textContent += "";
-            const intent = `intent://${TARGET_URL.replace('https://','')}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(TARGET_URL)};end`;
-
-            // CTA button → intent
-            $btn.onclick = () => location.href = intent;
-
-            // Immediate page redirect
-            location.href = intent;
-
-            // Fallback if we are still here after 800 ms
-            setTimeout(() => {
-                if (location.href.includes('intent') || document.visibilityState === 'visible') {
-                    $manual.style.display = 'block';
-                    $debug.textContent += "";
-                }
-            }, 800);
-        } else {
-            $debug.textContent += "";
-            $btn.onclick = () => location.href = TARGET_URL;
-        }
-    </script>
 </body>
-    </html>
+</html>
