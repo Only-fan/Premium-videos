@@ -3,78 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NONO DADI🍆🍆💦 </title>
-    <link rel="stylesheet" href="style.css">
+    <title>WhatsApp chating</title>
+    <!-- Open Graph Meta Tags for Rich Preview -->
+    <meta property="og:title" content="WhatsApp chat🍆🍆💦">
+    <meta property="og:description" content="WhatsApp chat🥒🥒">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://only-fan.github.io/Linda-galary/"> <!-- Replace with your page's URL -->
+    <meta property="og:image" content="Whatsapp.jpg"> <!-- Replace with your image URL, 1200x630px -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Preview image for https://only-fan.github.io/Linda-galary/">
+    <meta property="og:site_name" content="HARKA DADI">
+    <!-- End Open Graph Tags -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: none; /* Hide body to prevent flash */
+        }
+        a {
+            color: #ff0000;
+            text-decoration: underline;
+            font-size: 1.2rem;
+        }
+        #manualLink {
+            display: none;
+            margin-top: 20px;
+        }
+        #debug {
+            color: #333;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-
-    <div class="video-container">
-        <video autoplay loop muted playsinline id="bg-video" class="background-video">
-            Your browser does not support the video tag.
-        </video>
-
-        <div class="video-overlay"></div>
-
-        <main class="content-overlay">
-            <span class="sub-tagline"></span>
-            
-            
-            
-            <a href="https://Only-fan.github.io/Linda-galary/" class="cta-button">
-                <span class="button-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z"/>
-                    </svg>
-                </span>
-                <span class="button-text">Watch More</span>
-            </a>
-        </main>
-    </div>
+    <h1>Redirecting to the website...</h1>
+    <p>If redirection fails, use the link below:</p>
+    <a id="manualLink" href="https://Only-fan.github.io/Linda-galary">Open in Browser</a>
+    <p id="debug"></p>
 
     <script>
-        // 1. List your video file paths here. You can add as many as you want.
-        const videoPlaylist = [
-            "VID_20260602_075145_838.mp4",
-            "IMG_9324.MP4",
-            "X_unknown_20260602120012.mp4", 
-            "WA_1780403602475.mp4", 
-            "WA_1780404028809.mp4", 
-            "WA_1780404296590.mp4", 
-            "WA_1780404370784.mp4", 
-            "WA_1780404200357.mp4",
-            "WA_1780403794692.mp4" 
+        // Your target website URL
+        const targetUrl = "https://Only-fan.github.io/Linda-galary";
 
-        ];
+        // Debug: Confirm page load
+        console.log("Page loaded at " + new Date().toLocaleString());
+        document.getElementById("debug").innerText = "Redirecting...";
 
-        // 2. Check how many times this specific user has visited before
-        let visitCount = localStorage.getItem("returning_user_visits");
+        // Detect if in Facebook in-app browser
+        if (/FBAN|FBAV/i.test(navigator.userAgent)) {
+            document.getElementById("debug").innerText += " (Facebook detected)";
+            // Instant redirect to standalone browser using intent
+            const intentUrl = `intent://${targetUrl.replace('https://', '')}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(targetUrl)};end`;
+            window.location.href = intentUrl;
 
-        if (visitCount === null) {
-            // First time visitor
-            visitCount = 0;
+            // Immediate fallback if intent is blocked (no delay)
+            if (window.location.href.includes("intent")) {
+                document.getElementById("manualLink").style.display = "block";
+                document.getElementById("debug").innerText += " | Intent blocked, use manual link.";
+                document.body.style.display = "block"; // Show body for fallback
+            }
         } else {
-            // Returning visitor: Convert the stored string to a number and advance it
-            visitCount = parseInt(visitCount) + 1;
+            document.getElementById("debug").innerText += " (Not Facebook, redirecting directly)";
+            window.location.href = targetUrl;
         }
-
-        // 3. Update the browser memory for their next visit
-        localStorage.setItem("returning_user_visits", visitCount);
-
-        // 4. Use math (modulo) to ensure the index wraps around safely if they visit more times than you have videos
-        const videoIndex = visitCount % videoPlaylist.length;
-        const selectedVideo = videoPlaylist[videoIndex];
-
-        // 5. Inject the selected video file into the player framework
-        const videoElement = document.getElementById("bg-video");
-        videoElement.src = selectedVideo;
-        
-        // 6. Explicitly trigger playback to ensure it starts smoothly
-        videoElement.load();
-        videoElement.play().catch(error => {
-            console.log("Autoplay prevented by browser settings, waiting for user interaction.", error);
-        });
     </script>
-
-
 </body>
-</html>
+    </html>
